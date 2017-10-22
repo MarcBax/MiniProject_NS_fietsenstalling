@@ -31,6 +31,6 @@ def stallen():                                                              #fun
 
 #def informatie_opvragen():
 
-#test
+#test2
 #registreren()
 #stallen()
