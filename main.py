@@ -28,8 +28,8 @@ def stallen():                                                              #fun
 
 #def ophalen():
 
-
 #def informatie_opvragen():
+
 
 #registreren()
 #stallen()
