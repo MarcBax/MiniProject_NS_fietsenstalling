@@ -14,13 +14,13 @@ def registreren():                                                          #fun
                 teller_fietsnummer = 0
                 teller_naam = 0
                 for regel in regels:                                            #iedere regel in de lijst van regels doorlezen
-                    if fietsnummer_registratie in regel:                        #als de combinatie van het fietsnummer en naam in de regel staat, bij de teller 1 optellen
+                    if fietsnummer_registratie in regel:                        #als het fietsnummer in de regel staat, bij de teller van het fietsnummer 1 optellen
                         teller_fietsnummer += 1
-                    else:                                                       #als de combinatie van het fietsnummer en naam niet in de regel staat, bij de teller 0 optellen
+                    else:                                                       #als het fietsnummer niet in de regel staat, bij de teller van het fietsnummer 0 optellen
                         teller_fietsnummer += 0
-                    if naam_registratie in regel:
+                    if naam_registratie in regel:                               #als de naam in de regel staat, bij de teller van de naam 1 optellen
                         teller_naam += 1
-                    else:
+                    else:                                                       #als de naam niet in de regel staat, bij de teller van de naam 1 optellen
                         teller_naam += 0
                 if teller_fietsnummer == 1:                                     #als de teller van het fietsnummer 1 is, dus als het fietsnummer in de registratie csv-file staat
                     print("Uw fietsnummer is al geregistreerd.")
@@ -40,31 +40,41 @@ def stallen():                                                                  
         naam_stallen = input("Wat is uw naam? ")
         with open('registratie.csv', 'r') as registratiecsv:
             #lezen = csv.reader(registratiecsv, delimiter = ';')
-                combinatie_fietsnummer_naam = fietsnummer_stallen + ';' + naam_stallen
-                regels = registratiecsv.readlines()                             #iedere regel van registratie.csv lezen en in een lijst zetten
-                teller = 0
-                for regel in regels:                                            #iedere regel in de lijst van regels doorlezen
-                    if combinatie_fietsnummer_naam in regel:                    #als de combinatie van het fietsnummer en naam in de regel staat, bij de teller 1 optellen
-                        teller += 1
-                        registratie_fietsnummer_naam = regel                    #een variable maken
-                    else:                                                       #als de combinatie van het fietsnummer en naam niet in de regel staat, bij de teller 0 optellen
-                        teller += 0
-                if teller == 1:                                                 #als de teller 1 is, dus als het fietsnummer en naam in de registratie csv-file staat
-                    print("Uw fiets wordt gestald.")
-                else:
-                    print("Uw fietsnummer en naam is nog niet geregistreerd, probeer het opnieuw.")
-                    stallen()
+            regels = registratiecsv.readlines()                             #iedere regel van registratie.csv lezen en in een lijst zetten
+            teller = 0
+            for regel in regels:                                            #iedere regel in de lijst van regels doorlezen
+                if fietsnummer_stallen in regel and naam_stallen in regel:  #als de combinatie van het fietsnummer en naam in de regel staat, bij de teller 1 optellen
+                    teller += 1
+                    registratie_fietsnummer = fietsnummer_stallen           #een variable maken
+                    registratie_naam = naam_stallen
+                else:                                                       #als de combinatie van het fietsnummer en naam niet in de regel staat, bij de teller 0 optellen
+                    teller += 0
+            if teller == 0:
+                print("Uw fietsnummer in combinatie met uw naam is nog niet geregistreerd, probeer het opnieuw.")
+                stallen()
+            elif teller == 1:                                                #als de teller 1 is, dus als het fietsnummer en naam in de registratie csv-file staat
+                with open('stallen.csv', 'r') as lezenstallencsv:
+                    controle_regel = lezenstallencsv.readlines()            #iedere regel van het bestand stallen.csv in een lijst zetten
+                    teller = 0
+                    for regel in controle_regel:                            #voor iedere regel in de lijst met regels
+                        if fietsnummer_stallen in regel and naam_stallen in regel:  #als het fietsnummer en de naam in de regel staat
+                            teller += 1
+                        else:                                                       #als het fietsnummer en de naam niet in de regel staat
+                            teller += 0
+                    if teller == 1:                                         #als de teller 1 is
+                        print("Uw fietsnummer in combinatie met uw naam is al gestald, probeer het opnieuw.")
+                        stallen()
+                    else:                                                   #als de teller niet 0 is
+                        print("Uw fiets wordt gestald.")
         with open('stallen.csv', 'a') as stallencsv:
             vandaag = datetime.datetime.today()
-            datum_tijd = vandaag.strftime(" - %a %x %X")                           #de huidige datum en tijd
+            datum_tijd = vandaag.strftime("%a %x %X")                           #de huidige datum en tijd
             schrijven = csv.writer(stallencsv, delimiter = ';')
-            schrijven.writerow((registratie_fietsnummer_naam,datum_tijd))       #in stallen.csv de variable schrijven
-
+            schrijven.writerow((registratie_fietsnummer, registratie_naam, datum_tijd))       #in stallen.csv de variable schrijven
 
 #def ophalen():
 
 #def informatie_opvragen():
 
-
-#registreren()
+registreren()
 stallen()
