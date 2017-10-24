@@ -81,11 +81,11 @@ def OphaalMenu():
     global wind
     wind = Tk()
     wind.title("Ophalen!")
-    label = Label(wind, text="Fiets stallen", fg="white", bg="blue")
+    label = Label(wind, text="Fiets ophalen", fg="white", bg="blue")
     label.config(height="1", width="50")
     label.pack()
 
-    buttongadoor = Button(wind, text="Stal Fiets", fg="white", bg="blue")
+    buttongadoor = Button(wind, text="haal op", fg="white", bg="blue")
     buttongadoor.config(height="1", width="15")
     buttongadoor.place(x="185", y="174")
 
@@ -100,14 +100,14 @@ def OphaalMenu():
 def InfoMenu():
     global windo
     windo = Tk()
-    windo.title("Ophalen!")
-    label = Label(windo, text="Fiets stallen", fg="white", bg="blue")
+    windo.title("Informatie!")
+    label = Label(windo, text="Informatie", fg="white", bg="blue")
     label.config(height="1", width="50")
     label.pack()
 
-    buttongadoor = Button(windo, text="Stal Fiets", fg="white", bg="blue")
-    buttongadoor.config(height="1", width="15")
-    buttongadoor.place(x="185", y="174")
+    buttongadoor = Button(windo, text="persoonlijke informatie", fg="white", bg="blue")
+    buttongadoor.config(height="1", width="18")
+    buttongadoor.place(x="169", y="174")
 
     buttongaterug = Button(windo, text="Ga terug",command=OpenHoofdMenu3, fg="white", bg="red")
     buttongaterug.config(height="1", width="15")
