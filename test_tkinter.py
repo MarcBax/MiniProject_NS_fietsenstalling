@@ -43,9 +43,9 @@ def RegistreerMenu():
     e = Entry(w)
     e.place(x="114", y="66")
 
-    naam = Label(w, text="Fiets nummer:", fg="black", bg="yellow")
-    naam.config(height="1", width="30")
-    naam.place(x="0", y="95")
+    naam_2 = Label(w, text="Fiets nummer:", fg="black", bg="yellow")
+    naam_2.config(height="1", width="30")
+    naam_2.place(x="0", y="95")
 
     buttongadoor = Button(w, text="Registreer Gegevens",fg="white", bg="blue")
     buttongadoor.config(height="1", width="15")
@@ -100,6 +100,18 @@ def OphaalMenu():
     label = Label(wind, text="Fiets ophalen", fg="white", bg="blue")
     label.config(height="1", width="50")
     label.pack()
+
+    naam = Label(wind, text="Naam:", fg="white", bg="blue")
+    naam.config(height="1", width="12")
+    naam.place(x="43", y="65")
+    e = Entry(wind)
+    e.place(x="138", y="66")
+
+    fietsNummer = Label(wind, text="Fiets nummer:", fg="white", bg="blue")
+    fietsNummer.config(height="1", width="12")
+    fietsNummer.place(x="43", y="85")
+    e = Entry(wind)
+    e.place(x="138", y="86")
 
     buttongadoor = Button(wind, text="haal op", fg="white", bg="blue")
     buttongadoor.config(height="1", width="15")
