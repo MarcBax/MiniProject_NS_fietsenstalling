@@ -7,11 +7,11 @@ def HoofdMenu():
     label.config(height=1, width=50)
     label.pack(pady=12)
 
-    button_registreren = Button(window, text="fiets registreren",command=SluitScherm, bg="blue", fg="white")
+    button_registreren = Button(window, text="fiets registreren", command=SluitScherm1, bg="blue", fg="white")
     button_registreren.config(height=1, width=15)
     button_registreren.pack(pady=0.1)
 
-    button_stallen = Button(window, text="fiets stallen",bg="blue", fg="white")
+    button_stallen = Button(window, text="fiets stallen", command=SluitScherm2, bg="blue", fg="white")
     button_stallen.config(height=1, width=15)
     button_stallen.pack(pady=0.1)
 
@@ -23,13 +23,14 @@ def HoofdMenu():
     button_informatie.config(height=1, width=15)
     button_informatie.pack(pady=0.1)
 
-    button_quit = Button(window, text='quit', command=window.quit, bg='red', fg='white')
-    button_quit.config(height=1, width=4)
-    button_quit.place(x="262", y="174")
+    button_quit = Button(window, text='sluiten', command=window.quit, bg='red', fg='white')
+    button_quit.config(height=1, width=5)
+    button_quit.place(x="258", y="174")
 
 def RegistreerMenu():
+    global w
     w = Tk()
-    w.title("Welkom!!")
+    w.title("Registreren!")
     label = Label(w, text="Fiets Registreren", fg="white", bg="blue")
     label.config(height="1", width="50")
     label.pack()
@@ -42,21 +43,53 @@ def RegistreerMenu():
 
     buttongadoor = Button(w, text="Registreer Gegevens", fg="white", bg="blue")
     buttongadoor.config(height="1", width="15")
-    buttongadoor.pack(side="bottom",pady=30)
+    buttongadoor.place(x="185", y="174")
 
-    button_quit = Button(w, text='quit', command=w.quit, bg='red', fg='white')
-    button_quit.config(height=1, width=4)
-    button_quit.place(x="262", y="174")
+    buttongaterug = Button(w, text="Ga terug",command=OpenHoofdMenu, fg="white", bg="red")
+    buttongaterug.config(height="1", width="15")
+    buttongaterug.place(x="0", y="174")
 
     w.configure(background="yellow")
     w.maxsize(300, 200)
     w.minsize(300, 200)
-    w.mainloop()
 
-def SluitScherm():
-    window.destroy()
+def StalMenu():
+    global win
+    win = Tk()
+    win.title("Stal!")
+    label = Label(win, text="Fiets stallen", fg="white", bg="blue")
+    label.config(height="1", width="50")
+    label.pack()
+
+    buttongadoor = Button(win, text="Stal Fiets", fg="white", bg="blue")
+    buttongadoor.config(height="1", width="15")
+    buttongadoor.place(x="185", y="174")
+
+    buttongaterug = Button(win, text="Ga terug",command=OpenHoofdMenu, fg="white", bg="red")
+    buttongaterug.config(height="1", width="15")
+    buttongaterug.place(x="0", y="174")
+
+    win.configure(background="yellow")
+    win.maxsize(300, 200)
+    win.minsize(300, 200)
+
+
+def SluitScherm1():
+    window.withdraw()
     RegistreerMenu()
 
+def SluitScherm2():
+    window.withdraw()
+    StalMenu()
+
+def OpenHoofdMenu():
+    window.deiconify()
+    w.withdraw()
+    for gegevens in w.winfo_children():
+        gegevens.destroy()
+    win.withdraw()
+    for gegevens in win.winfo_children():
+        gegevens.destroy()
 
 HoofdMenu()
 window.configure(background="yellow")
