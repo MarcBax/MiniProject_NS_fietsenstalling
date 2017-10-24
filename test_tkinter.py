@@ -15,11 +15,11 @@ def HoofdMenu():
     button_stallen.config(height=1, width=15)
     button_stallen.pack(pady=0.1)
 
-    button_ophalenFiets = Button(window, text="fiets ophalen",bg="blue", fg="white")
+    button_ophalenFiets = Button(window, text="fiets ophalen", command=SluitScherm3,bg="blue", fg="white")
     button_ophalenFiets.config(height=1, width=15)
     button_ophalenFiets.pack(pady=0.1)
 
-    button_informatie = Button(window, text="informatie ophalen",bg="blue", fg="white")
+    button_informatie = Button(window, text="informatie ophalen", command=SluitScherm4, bg="blue", fg="white")
     button_informatie.config(height=1, width=15)
     button_informatie.pack(pady=0.1)
 
@@ -41,7 +41,11 @@ def RegistreerMenu():
     e = Entry(w)
     e.place(x="114", y="66")
 
-    buttongadoor = Button(w, text="Registreer Gegevens", fg="white", bg="blue")
+    naam = Label(w, text="Fiets nummer:", fg="black", bg="yellow")
+    naam.config(height="1", width="30")
+    naam.place(x="0", y="95")
+
+    buttongadoor = Button(w, text="Registreer Gegevens",fg="white", bg="blue")
     buttongadoor.config(height="1", width="15")
     buttongadoor.place(x="185", y="174")
 
@@ -65,7 +69,7 @@ def StalMenu():
     buttongadoor.config(height="1", width="15")
     buttongadoor.place(x="185", y="174")
 
-    buttongaterug = Button(win, text="Ga terug",command=OpenHoofdMenu, fg="white", bg="red")
+    buttongaterug = Button(win, text="Ga terug",command=OpenHoofdMenu1, fg="white", bg="red")
     buttongaterug.config(height="1", width="15")
     buttongaterug.place(x="0", y="174")
 
@@ -73,6 +77,45 @@ def StalMenu():
     win.maxsize(300, 200)
     win.minsize(300, 200)
 
+def OphaalMenu():
+    global wind
+    wind = Tk()
+    wind.title("Ophalen!")
+    label = Label(wind, text="Fiets stallen", fg="white", bg="blue")
+    label.config(height="1", width="50")
+    label.pack()
+
+    buttongadoor = Button(wind, text="Stal Fiets", fg="white", bg="blue")
+    buttongadoor.config(height="1", width="15")
+    buttongadoor.place(x="185", y="174")
+
+    buttongaterug = Button(wind, text="Ga terug",command=OpenHoofdMenu2, fg="white", bg="red")
+    buttongaterug.config(height="1", width="15")
+    buttongaterug.place(x="0", y="174")
+
+    wind.configure(background="yellow")
+    wind.maxsize(300, 200)
+    wind.minsize(300, 200)
+
+def InfoMenu():
+    global windo
+    windo = Tk()
+    windo.title("Ophalen!")
+    label = Label(windo, text="Fiets stallen", fg="white", bg="blue")
+    label.config(height="1", width="50")
+    label.pack()
+
+    buttongadoor = Button(windo, text="Stal Fiets", fg="white", bg="blue")
+    buttongadoor.config(height="1", width="15")
+    buttongadoor.place(x="185", y="174")
+
+    buttongaterug = Button(windo, text="Ga terug",command=OpenHoofdMenu3, fg="white", bg="red")
+    buttongaterug.config(height="1", width="15")
+    buttongaterug.place(x="0", y="174")
+
+    windo.configure(background="yellow")
+    windo.maxsize(300, 200)
+    windo.minsize(300, 200)
 
 def SluitScherm1():
     window.withdraw()
@@ -82,13 +125,36 @@ def SluitScherm2():
     window.withdraw()
     StalMenu()
 
+def SluitScherm3():
+   window.withdraw()
+   OphaalMenu()
+
+def SluitScherm4():
+    window.withdraw()
+    InfoMenu()
+
 def OpenHoofdMenu():
     window.deiconify()
     w.withdraw()
     for gegevens in w.winfo_children():
         gegevens.destroy()
+
+def OpenHoofdMenu1():
+    window.deiconify()
     win.withdraw()
     for gegevens in win.winfo_children():
+        gegevens.destroy()
+
+def OpenHoofdMenu2():
+    window.deiconify()
+    wind.withdraw()
+    for gegevens in wind.winfo_children():
+        gegevens.destroy()
+
+def OpenHoofdMenu3():
+    window.deiconify()
+    windo.withdraw()
+    for gegevens in windo.winfo_children():
         gegevens.destroy()
 
 HoofdMenu()
