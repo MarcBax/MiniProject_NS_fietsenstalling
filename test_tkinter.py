@@ -193,7 +193,7 @@ def InfoMenu():
     info.config(height="2", width="30")
     info.pack()
 
-    buttongadoor = Button(windo, text="persoonlijke informatie", font=("Myriad pro cond",20), fg="white", bg="red", command=Open_persoonlijke_informatie)
+    buttongadoor = Button(windo, text="persoonlijke informatie", font=("Myriad pro cond",20), fg="white", bg="blue", command=Open_persoonlijke_informatie)
     buttongadoor.config(height="1", width="30")
     buttongadoor.place(x="1050", y="730")
 
@@ -229,7 +229,7 @@ def Persoonlijke_informatie():
     e4.place(x="600", y="300")
 
     buttongadoor = Button(window1, text="opvragen", font=("Myriad pro cond",20), fg="white", bg="blue",command=aanroepen_informatie)
-    buttongadoor.config(height="1", width="18")
+    buttongadoor.config(height="1", width="30")
     buttongadoor.place(x="1050", y="730")
 
     buttongaterug = Button(window1, text="Ga terug", command=OpenHoofdMenu4, font=("Myriad pro cond",20), fg="white", bg="red")
