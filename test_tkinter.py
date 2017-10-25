@@ -7,53 +7,53 @@ window.title("Welkom!")
 
 
 def HoofdMenu():
-    label = Label(window, text="Welkom bij de NS-fietsenstalling!", bg="blue", fg="white")
-    label.config(height=1, width=50)
-    label.pack(pady=12)
+    label = Label(window, text="Welkom bij de NS-fietsenstalling!", font=("Myriad pro cond",20), bg="blue", fg="white")
+    label.config(height=2, width=250)
+    label.pack(pady=22)
 
-    button_registreren = Button(window, text="fiets registreren", command=SluitScherm1, bg="blue", fg="white")
-    button_registreren.config(height=1, width=15)
-    button_registreren.pack(pady=0.1)
+    button_registreren = Button(window, text="fiets registreren", font=("Myriad pro cond",20), command=SluitScherm1, bg="blue", fg="white")
+    button_registreren.config(height=1, width=30)
+    button_registreren.pack(pady=1)
 
-    button_stallen = Button(window, text="fiets stallen", command=SluitScherm2, bg="blue", fg="white")
-    button_stallen.config(height=1, width=15)
-    button_stallen.pack(pady=0.1)
+    button_stallen = Button(window, text="fiets stallen", font=("Myriad pro cond",20), command=SluitScherm2, bg="blue", fg="white")
+    button_stallen.config(height=1, width=30)
+    button_stallen.pack(pady=1)
 
-    button_ophalenFiets = Button(window, text="fiets ophalen", command=SluitScherm3,bg="blue", fg="white")
-    button_ophalenFiets.config(height=1, width=15)
-    button_ophalenFiets.pack(pady=0.1)
+    button_ophalenFiets = Button(window, text="fiets ophalen", font=("Myriad pro cond",20), command=SluitScherm3,bg="blue", fg="white")
+    button_ophalenFiets.config(height=1, width=30)
+    button_ophalenFiets.pack(pady=1)
 
-    button_informatie = Button(window, text="informatie ophalen",command=SluitScherm4,bg="blue", fg="white")
-    button_informatie.config(height=1, width=15)
-    button_informatie.pack(pady=0.1)
+    button_informatie = Button(window, text="informatie ophalen", font=("Myriad pro cond",20), command=SluitScherm4,bg="blue", fg="white")
+    button_informatie.config(height=1, width=30)
+    button_informatie.pack(pady=1)
 
-    button_quit = Button(window, text='sluiten', command=window.quit, bg='red', fg='white')
+    button_quit = Button(window, text='sluiten', font=("Myriad pro cond",20), command=window.quit, bg='red', fg='white')
     button_quit.config(height=1, width=5)
-    button_quit.place(x="258", y="174")
+    button_quit.place(x="1435", y="730")
 
 def RegistreerMenu():
     global w, e, fietsnummer_registratie
     w = Tk()
     w.title("Registreren!")
-    label = Label(w, text="Fiets Registreren", fg="white", bg="blue")
-    label.config(height="1", width="50")
+    label = Label(w, text="Fiets Registreren", font=("Myriad pro cond",20), fg="white", bg="blue")
+    label.config(height="2", width="250")
     label.pack()
 
-    naam = Label(w, text="Naam:", fg="white", bg="blue")
-    naam.config(height="1", width="5")
-    naam.place(x="73", y="65")
-    e = Entry(w)
-    e.place(x="114", y="66")
+    naam = Label(w, text="Naam:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    naam.config(height="1", width="30")
+    naam.place(x="73", y="255")
+    e = Entry(w,width=50)
+    e.place(x="600", y="255")
 
     ctypes.windll.user32.MessageBoxW(0,
                                      "Maak een account aan op telegram en stuur een bericht naar fietsenstallingNS om een tracking ID aan te vragen, als u niet van deze functie gebruik wilt maken voer een 0 in",
                                      "Optionele Telegram notificatie", 1)
-    naam = Label(w, text="Telegram ID:", fg="white", bg="blue")
-    naam.config(height="1", width="10")
-    naam.place(x="73", y="90")
-    e = Entry(w,width=14)
+    naam = Label(w, text="Telegram ID:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    naam.config(height="1", width="30")
+    naam.place(x="73", y="300")
+    e = Entry (w,width=50)
     #e.config(heigh="1", width="7")
-    e.place(x="150", y="91")
+    e.place(x="600", y="300")
 
 
     if fietsnummer_registratie < 99:
@@ -61,23 +61,22 @@ def RegistreerMenu():
         print_text = 'Uw fietsnummer is: ' + str(fietsnummer_registratie)
     else:
         print_text = "Het maximaal aantal fietsen is gestald."
-    naam_2 = Label(w, text= print_text, fg="black", bg="yellow")
+    naam_2 = Label(w, text= print_text, font=("Myriad pro cond",20), fg="black", bg="yellow")
     naam_2.config(height="1", width="30")
-    naam_2.place(x="0", y="125")
+    naam_2.pack()
 
     naam_registratie = e.get()
     print("Naam: ", str(naam_registratie))
-    buttongadoor = Button(w, text="Registreer Gegevens", fg="white", bg="blue", command=Registratie)
-    buttongadoor.config(height="1", width="15")
-    buttongadoor.place(x="185", y="174")
+    buttongadoor = Button(w, text="Registreer Gegevens", font=("Myriad pro cond",20), fg="white", bg="blue", command=Registratie)
+    buttongadoor.config(height="1", width="30")
+    buttongadoor.pack(side="bottom")
 
-    buttongaterug = Button(w, text="Ga terug",command=OpenHoofdMenu, fg="white", bg="red")
-    buttongaterug.config(height="1", width="15")
-    buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(w, text="Ga terug",command=OpenHoofdMenu, font=("Myriad pro cond",20),  fg="white", bg="red")
+    buttongaterug.config(height="1", width="30")
+    buttongaterug.pack(side="bottom")
 
     w.configure(background="yellow")
-    w.maxsize(300, 200)
-    w.minsize(300, 200)
+    w.geometry("{0}x{1}+0+0".format(w.winfo_screenwidth(), w.winfo_screenheight()))
 
 def Registratie():
     schrijven_registreren()
