@@ -51,9 +51,8 @@ def RegistreerMenu():
     naam = Label(w, text="Telegram ID:", font=("Myriad pro cond",20), fg="white", bg="blue")
     naam.config(height="1", width="30")
     naam.place(x="73", y="300")
-    e = Entry (w,width=50)
-    #e.config(heigh="1", width="7")
-    e.place(x="600", y="300")
+    e7 = Entry (w,width=50)
+    e7.place(x="600", y="300")
 
 
     if fietsnummer_registratie < 99:
