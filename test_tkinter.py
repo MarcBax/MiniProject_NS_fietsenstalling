@@ -1,6 +1,7 @@
 from  tkinter import *
 import csv
 import datetime
+import ctypes
 window = Tk()
 window.title("Welkom!")
 
