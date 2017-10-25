@@ -159,7 +159,7 @@ def schrijven_ophalen():
     global e5, e6
     naam = e5.get()
     fietsnummer = e6.get()
-    ophalen(naam, fietsnummer)
+    fiets_ophalen(naam, fietsnummer)
 
 # auteur: Mark
 def InfoMenu():
@@ -171,6 +171,17 @@ def InfoMenu():
     label.pack()
 
     info = Label(windo, text="Deze fietsen stalling heeft 99 plekken \n en is 24/7 open.", fg="black", bg="yellow")
+    info.config(height="2", width="30")
+    info.pack()
+
+    with open('stallen.csv') as lezenstallencsv:
+        regels = lezenstallencsv.readlines()
+        if len(regels) > 1:
+            plekken_over = "Er zijn " + str(int(99 - len(regels) / 2)) + " plekken over."
+        elif len(regels) == 1:
+            plekken_over = "Er zijn 99 plekken over."
+
+    info = Label(windo, text=plekken_over, fg="black", bg="yellow")
     info.config(height="2", width="30")
     info.pack()
 
@@ -223,6 +234,7 @@ def Persoonlijke_informatie():
     window1.minsize(300, 200)
 
 def aanroepen_informatie():
+    window1.withdraw()
     schrijven_persoonlijke_informatie()
     pop_up_informatie_datum()
 
@@ -233,7 +245,7 @@ def schrijven_persoonlijke_informatie():
     informatie_opvragen(naam, fietsnummer)
 
 def pop_up_informatie_datum():
-    global datum
+    global datum, window2
     window2 = Tk()
     window2.title("Informatie!")
     label = Label(windo, text="Datum", fg="white", bg="blue")
@@ -241,16 +253,16 @@ def pop_up_informatie_datum():
     label.pack()
 
     naam_3 = Label(window2, text=datum, fg="black", bg="yellow")
-    naam_3.config(height="1", width="30")
+    naam_3.config(height="3", width="30")
     naam_3.pack()
 
-    #buttongaterug = Button(window2, text="sluiten", command=?, fg="white", bg="red")
-    #buttongaterug.config(height="1", width="15")
-    #buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(window2, text="sluiten", command=SluitScherm5, fg="white", bg="red")
+    buttongaterug.config(height="1", width="15")
+    buttongaterug.place(x="0", y="174")
 
     window2.configure(background="yellow")
-    window2.maxsize(75, 25)
-    window2.minsize(75, 25)
+    window2.maxsize(300, 200)
+    window2.minsize(300, 200)
 
 #auteur: Mark
 def SluitScherm1():
@@ -271,6 +283,11 @@ def SluitScherm3():
 def SluitScherm4():
     window.withdraw()
     InfoMenu()
+
+def SluitScherm5():
+    window.deiconify()
+    window2.withdraw()
+
 
 def OpenHoofdMenu():
     window.deiconify()
@@ -308,22 +325,6 @@ def OpenHoofdMenu4():
 #auteur: Marc Bax
 def registreren(naam_registratie):              #functie voor het registreren van een fiets
     global fietsnummer_registratie
-    #infile = open('temp_test_tkinter.txt', 'r')
-    #naam_registratie = infile.read()
-    #print("Naam: ", naam_registratie)
-    #if naam_registratie == "":                                          # als de input ""(niks) is stoppen met while-loop
-        #break
-    #with open('registratie.csv', 'r') as lezenregistrerencsv:
-            #regels = lezenregistrerencsv.readlines()                    #iedere regel van registratie.csv lezen en in een lijst zetten
-            #teller_naam = 0
-            #for regel in regels:                                            #iedere regel in de lijst van regels doorlezen
-                #if naam_registratie in regel:                               #als de naam in de regel staat, bij de teller van de naam 1 optellen
-                    #teller_naam += 1
-                #else:                                                       #als de naam niet in de regel staat, bij de teller van de naam 1 optellen
-                    #teller_naam += 0
-            #if teller_naam == 1:                                            #als de teller van de naam 1 is, dus als de naam in de registratie csv-file staat
-                #print("Uw naam is al geregistreerd.")
-                #continue
     with open('registratie.csv', 'a') as registrerencsv:
         schrijven = csv.writer(registrerencsv, delimiter = ';')
         print(naam_registratie)
@@ -338,35 +339,21 @@ def stallen(naam_stallen, fietsnummer_stallen):                           #funct
         schrijven = csv.writer(stallencsv, delimiter = ';')
         schrijven.writerow((fietsnummer_stallen, naam_stallen, datum_tijd))       #in stallen.csv de variable schrijven
 
-#auteur: Gianluca
-def ophalen(naam_ophalen, fietsnummer_ophalen):
-    global datum_tijd
-    lijst_gestalde_fietsen = []  # lijst maken voor controle naam en nummer
-    lijst_opgehaald_fietsen = []  # lijst maken voor nacontrole
-    with open('stallen.csv', 'r') as lezenstallencsv:  # naar lijst schrijven
-        regels = lezenstallencsv.readlines()
-        for rij in regels:
-            lijst_gestalde_fietsen.append(rij)
-        #teller = 0
-        #for item in lijst_gestalde_fietsen:  # door lijst heen loopen om gebruiker te vinden
-        #    if fietsnummer_ophalen in item and naam_ophalen in item:  # gebruiker in lijst zorgt voor een positief getal
-        #        teller += 1
-        #if teller > 0:
-        #    lijst_opgehaald_fietsen.append(fietsnummer_ophalen + ";" + naam_ophalen + ";" + datum_tijd)  # bij een positief getal mag fiets opgehaald worden
-        #    # en wordt de gebruiker in een lijst van ophehaalde fietsen gestopt
-        #    print("u mag uw fiets ophalen.")
-        #else:  # bij een gebrek aan positief getal krijgt gebruiker een foutmelding
-        #    if teller < 1:
-        #        print("onjuiste combinatie")
-    #print(lijst_gestalde_fietsen)
-    #print(lijst_opgehaald_fietsen)
-        for row in regels:
-            if naam_ophalen in row and fietsnummer_ophalen in row:
-                lijst_gestalde_fietsen.remove(row)
-    with open('stallen.csv', 'w') as schrijvenstallencsv:
-        schrijven = csv.writer(schrijvenstallencsv)
-        schrijven.writerow("fietsnummer;naam;datum")
-        schrijven.writerow((lijst_gestalde_fietsen))
+#auteur: Marc Bax
+def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
+    infile = open('stallen.csv', 'r')
+    lijst_gestalde_fietsen = infile.readlines()
+    lijst_gestalde_fietsen.remove('fietsnummer;naam;datum\n')
+    infile.close()
+    outfile = open('stallen.csv', 'w')
+    outfile.write('fietsnummer;naam;datum\n')
+    for regel in lijst_gestalde_fietsen:
+        partsRegel = regel.rstrip().split(";")
+        if len(partsRegel) >= 2:
+            if naam_ophalen != partsRegel[1] and fietsnummer_ophalen != partsRegel[0]:
+                outfile.write(regel)
+                outfile.write('\n')
+    outfile.close()
 
 #auteur: Marc Bax
 def informatie_opvragen(naam_informatie, fietsnummer_informatie):
@@ -375,13 +362,23 @@ def informatie_opvragen(naam_informatie, fietsnummer_informatie):
         lezen = csv.reader(lezenstallencsv, delimiter=';')
         if naam_informatie or fietsnummer_informatie == "":
             datum = ""
+        teller = 0
         for rij in lezen:
             if naam_informatie in rij and fietsnummer_informatie in rij:
-                datum = rij[2]
+                teller += 1
+                datum_tijd = rij[2]
+            else:
+                teller += 0
+        if teller == 1:
+            datum = "Uw fiets is gestald op: \n" + datum_tijd
+        else:
+            datum = "Uw fiets is niet meer gestald."
 
 fietsnummer_registratie = 0
 HoofdMenu()
 window.configure(background="yellow")
-window.maxsize(300,200)
-window.minsize(300,200)
+#window.maxsize(300,200)
+#window.minsize(300,200)
+#window.overrideredirect(True)
+window.geometry("{0}x{1}+0+0".format(window.winfo_screenwidth(), window.winfo_screenheight()))
 window.mainloop()
