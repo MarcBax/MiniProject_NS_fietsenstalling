@@ -61,19 +61,19 @@ def RegistreerMenu():
         print_text = 'Uw fietsnummer is: ' + str(fietsnummer_registratie)
     else:
         print_text = "Het maximaal aantal fietsen is gestald."
-    naam_2 = Label(w, text= print_text, font=("Myriad pro cond",20), fg="black", bg="yellow")
+    naam_2 = Label(w, text= print_text, font=("Myriad pro cond",30), fg="black", bg="yellow")
     naam_2.config(height="1", width="30")
-    naam_2.pack()
+    naam_2.place(x="5", y="350")
 
     naam_registratie = e.get()
     print("Naam: ", str(naam_registratie))
     buttongadoor = Button(w, text="Registreer Gegevens", font=("Myriad pro cond",20), fg="white", bg="blue", command=Registratie)
     buttongadoor.config(height="1", width="30")
-    buttongadoor.pack(side="bottom")
+    buttongadoor.place(x="1050", y="730")
 
     buttongaterug = Button(w, text="Ga terug",command=OpenHoofdMenu, font=("Myriad pro cond",20),  fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.pack(side="bottom")
+    buttongaterug.place(x="0", y="730")
 
     w.configure(background="yellow")
     w.geometry("{0}x{1}+0+0".format(w.winfo_screenwidth(), w.winfo_screenheight()))
@@ -91,33 +91,32 @@ def StalMenu():
     global win, e1, e2
     win = Tk()
     win.title("Stal!")
-    label = Label(win, text="Fiets stallen", fg="white", bg="blue")
-    label.config(height="1", width="50")
+    label = Label(win, text="Fiets stallen", font=("Myriad pro cond",20), fg="white", bg="blue")
+    label.config(height="2", width="250")
     label.pack()
 
-    naam = Label(win, text="Naam:", fg="white", bg="blue")
-    naam.config(height="1", width="12")
-    naam.place(x="43", y="65")
-    e1 = Entry(win)
-    e1.place(x="138", y="66")
+    naam = Label(win, text="Naam:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    naam.config(height="1", width="30")
+    naam.place(x="73", y="255")
+    e1 = Entry(win, width=50)
+    e1.place(x="600", y="255")
 
-    fietsNummer = Label(win, text="Fiets nummer:", fg="white", bg="blue")
-    fietsNummer.config(height="1", width="12")
-    fietsNummer.place(x="43", y="85")
-    e2 = Entry(win)
-    e2.place(x="138", y="86")
+    fietsNummer = Label(win, text="Fiets nummer:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    fietsNummer.config(height="1", width="30")
+    fietsNummer.place(x="73", y="300")
+    e2 = Entry(win, width=50)
+    e2.place(x="600", y="300")
 
-    buttongadoor = Button(win, text="Stal Fiets", fg="white", bg="blue", command=Stallen)
-    buttongadoor.config(height="1", width="15")
-    buttongadoor.place(x="185", y="174")
+    buttongadoor = Button(win, text="Stal Fiets", font=("Myriad pro cond",20), fg="white", bg="blue", command=Stallen)
+    buttongadoor.config(height="1", width="30")
+    buttongadoor.place(x="1050", y="730")
 
-    buttongaterug = Button(win, text="Ga terug",command=OpenHoofdMenu1, fg="white", bg="red")
-    buttongaterug.config(height="1", width="15")
-    buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(win, text="Ga terug", font=("Myriad pro cond",20), command=OpenHoofdMenu1, fg="white", bg="red")
+    buttongaterug.config(height="1", width="30")
+    buttongaterug.place(x="0", y="730")
 
     win.configure(background="yellow")
-    win.maxsize(300, 200)
-    win.minsize(300, 200)
+    win.geometry("{0}x{1}+0+0".format(win.winfo_screenwidth(), win.winfo_screenheight()))
 
 def Stallen():
     schrijven_stallen()
@@ -134,33 +133,32 @@ def OphaalMenu():
     global wind, e5, e6
     wind = Tk()
     wind.title("Ophalen!")
-    label = Label(wind, text="Fiets ophalen", fg="white", bg="blue")
-    label.config(height="1", width="50")
+    label = Label(wind, text="Fiets ophalen", font=("Myriad pro cond",20), fg="white", bg="blue")
+    label.config(height="2", width="250")
     label.pack()
 
-    naam = Label(wind, text="Naam:", fg="white", bg="blue")
-    naam.config(height="1", width="12")
-    naam.place(x="43", y="65")
-    e5 = Entry(wind)
-    e5.place(x="138", y="66")
+    naam = Label(wind, text="Naam:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    naam.config(height="1", width="30")
+    naam.place(x="73", y="255")
+    e5 = Entry(wind, width=50)
+    e5.place(x="600", y="255")
 
-    fietsNummer = Label(wind, text="Fiets nummer:", fg="white", bg="blue")
-    fietsNummer.config(height="1", width="12")
-    fietsNummer.place(x="43", y="85")
-    e6 = Entry(wind)
-    e6.place(x="138", y="86")
+    fietsNummer = Label(wind, text="Fiets nummer:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    fietsNummer.config(height="1", width="30")
+    fietsNummer.place(x="73", y="300")
+    e6 = Entry(wind, width=50)
+    e6.place(x="600", y="300")
 
-    buttongadoor = Button(wind, text="haal op", fg="white", bg="blue", command=Ophalen)
-    buttongadoor.config(height="1", width="15")
-    buttongadoor.place(x="185", y="174")
+    buttongadoor = Button(wind, text="haal op", font=("Myriad pro cond",20), fg="white", bg="blue", command=Ophalen)
+    buttongadoor.config(height="1", width="30")
+    buttongadoor.place(x="1050", y="730")
 
-    buttongaterug = Button(wind, text="Ga terug",command=OpenHoofdMenu2, fg="white", bg="red")
-    buttongaterug.config(height="1", width="15")
-    buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(wind, text="Ga terug", font=("Myriad pro cond",20), command=OpenHoofdMenu2, fg="white", bg="red")
+    buttongaterug.config(height="1", width="30")
+    buttongaterug.place(x="0", y="730")
 
     wind.configure(background="yellow")
-    wind.maxsize(300, 200)
-    wind.minsize(300, 200)
+    wind.geometry("{0}x{1}+0+0".format(wind.winfo_screenwidth(), wind.winfo_screenheight()))
 
 def Ophalen():
     schrijven_ophalen()
@@ -259,21 +257,20 @@ def pop_up_informatie_datum():
     global datum, window2
     window2 = Tk()
     window2.title("Informatie!")
-    label = Label(windo, text="Datum", fg="white", bg="blue")
+    label = Label(windo, text="Datum",font=("Myriad pro cond",20), fg="white", bg="blue")
     label.config(height="1", width="50")
-    label.pack()
+    label.place(x=300, y=50)
 
-    naam_3 = Label(window2, text=datum, fg="black", bg="yellow")
+    naam_3 = Label(window2, text=datum, font=("Myriad pro cond",20), fg="black", bg="yellow")
     naam_3.config(height="3", width="30")
-    naam_3.pack()
+    naam_3.place(x=300, y=100)
 
-    buttongaterug = Button(window2, text="sluiten", command=SluitScherm5, fg="white", bg="red")
-    buttongaterug.config(height="1", width="15")
-    buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(window2, text="sluiten", font=("Myriad pro cond",20), command=SluitScherm5, fg="white", bg="red")
+    buttongaterug.config(height="1", width="30")
+    buttongaterug.place(x="0", y="730")
 
     window2.configure(background="yellow")
-    window2.maxsize(300, 200)
-    window2.minsize(300, 200)
+    window2.geometry("{0}x{1}+0+0".format(window2.winfo_screenwidth(), window2.winfo_screenheight()))
 
 #auteur: Mark
 def SluitScherm1():
@@ -381,15 +378,12 @@ def informatie_opvragen(naam_informatie, fietsnummer_informatie):
             else:
                 teller += 0
         if teller == 1:
-            datum = "Uw fiets is gestald op: \n" + datum_tijd
+            datum = "Uw fiets is gestald op: " + datum_tijd
         else:
             datum = "Uw fiets is niet meer gestald."
 
 fietsnummer_registratie = 0
 HoofdMenu()
 window.configure(background="yellow")
-#window.maxsize(300,200)
-#window.minsize(300,200)
-#window.overrideredirect(True)
 window.geometry("{0}x{1}+0+0".format(window.winfo_screenwidth(), window.winfo_screenheight()))
 window.mainloop()
