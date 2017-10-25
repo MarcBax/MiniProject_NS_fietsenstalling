@@ -175,12 +175,11 @@ def InfoMenu():
     global windo
     windo = Tk()
     windo.title("Informatie!")
-    label = Label(windo, text="Informatie", fg="white", bg="blue")
-    label.config(height="1", width="50")
+    label = Label(windo, text="Informatie", font=("Myriad pro cond",20), fg="white", bg="blue")
+    label.config(height="2", width="250")
     label.pack()
-
-    info = Label(windo, text="Deze fietsen stalling heeft 99 plekken \n en is 24/7 open.", fg="black", bg="yellow")
-    info.config(height="2", width="30")
+    info = Label(windo, text="Deze fietsen stalling heeft 99 plekken en is 24/7 open.", font=("Myriad pro cond",20), fg="black", bg="yellow")
+    info.config(height="2", width="45")
     info.pack()
 
     with open('stallen.csv') as lezenstallencsv:
@@ -190,21 +189,20 @@ def InfoMenu():
         elif len(regels) == 1:
             plekken_over = "Er zijn 99 plekken over."
 
-    info = Label(windo, text=plekken_over, fg="black", bg="yellow")
+    info = Label(windo, text=plekken_over, font=("Myriad pro cond",20), fg="black", bg="yellow")
     info.config(height="2", width="30")
     info.pack()
 
-    buttongadoor = Button(windo, text="persoonlijke informatie", fg="white", bg="blue", command=Open_persoonlijke_informatie)
-    buttongadoor.config(height="1", width="18")
-    buttongadoor.place(x="169", y="174")
+    buttongadoor = Button(windo, text="persoonlijke informatie", font=("Myriad pro cond",20), fg="white", bg="red", command=Open_persoonlijke_informatie)
+    buttongadoor.config(height="1", width="30")
+    buttongadoor.place(x="1050", y="730")
 
-    buttongaterug = Button(windo, text="Ga terug",command=OpenHoofdMenu3, fg="white", bg="red")
-    buttongaterug.config(height="1", width="15")
-    buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(windo, text="Ga terug",command=OpenHoofdMenu3, font=("Myriad pro cond",20), fg="white", bg="red")
+    buttongaterug.config(height="1", width="30")
+    buttongaterug.place(x="0", y="730")
 
     windo.configure(background="yellow")
-    windo.maxsize(300, 200)
-    windo.minsize(300, 200)
+    windo.geometry("{0}x{1}+0+0".format(windo.winfo_screenwidth(), windo.winfo_screenheight()))
 
 def Open_persoonlijke_informatie():
     windo.withdraw()
@@ -214,33 +212,33 @@ def Persoonlijke_informatie():
     global window1, e3, e4
     window1 = Tk()
     window1.title("Informatie!")
-    label = Label(windo, text="Informatie", fg="white", bg="blue")
-    label.config(height="1", width="50")
+    label = Label(windo, text="Informatie", font=("Myriad pro cond",20), fg="white", bg="blue")
+    label.config(height="2", width="250")
     label.pack()
 
-    naam = Label(window1, text="Naam:", fg="white", bg="blue")
-    naam.config(height="1", width="12")
-    naam.place(x="43", y="65")
-    e3 = Entry(window1)
-    e3.place(x="138", y="66")
+    naam = Label(window1, text="Naam:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    naam.config(height="1", width="30")
+    naam.place(x="73", y="255")
+    e3 = Entry(window1, width=50)
+    e3.place(x="600", y="255")
 
-    fietsNummer = Label(window1, text="Fiets nummer:", fg="white", bg="blue")
-    fietsNummer.config(height="1", width="12")
-    fietsNummer.place(x="43", y="85")
-    e4 = Entry(window1)
-    e4.place(x="138", y="86")
+    fietsNummer = Label(window1, text="Fiets nummer:", font=("Myriad pro cond",20), fg="white", bg="blue")
+    fietsNummer.config(height="1", width="30")
+    fietsNummer.place(x="73", y="300")
+    e4 = Entry(window1, width=50)
+    e4.place(x="600", y="300")
 
-    buttongadoor = Button(window1, text="opvragen", fg="white", bg="blue",command=aanroepen_informatie)
+    buttongadoor = Button(window1, text="opvragen", font=("Myriad pro cond",20), fg="white", bg="blue",command=aanroepen_informatie)
     buttongadoor.config(height="1", width="18")
-    buttongadoor.place(x="169", y="174")
+    buttongadoor.place(x="1050", y="730")
 
-    buttongaterug = Button(window1, text="Ga terug", command=OpenHoofdMenu4, fg="white", bg="red")
-    buttongaterug.config(height="1", width="15")
-    buttongaterug.place(x="0", y="174")
+    buttongaterug = Button(window1, text="Ga terug", command=OpenHoofdMenu4, font=("Myriad pro cond",20), fg="white", bg="red")
+    buttongaterug.config(height="1", width="30")
+    buttongaterug.place(x="0", y="730")
 
     window1.configure(background="yellow")
-    window1.maxsize(300, 200)
-    window1.minsize(300, 200)
+    window1.configure(background="yellow")
+    window1.geometry("{0}x{1}+0+0".format(windo.winfo_screenwidth(), windo.winfo_screenheight()))
 
 def aanroepen_informatie():
     window1.withdraw()
