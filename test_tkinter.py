@@ -44,6 +44,17 @@ def RegistreerMenu():
     e = Entry(w)
     e.place(x="114", y="66")
 
+    ctypes.windll.user32.MessageBoxW(0,
+                                     "Maak een account aan op telegram en stuur een bericht naar fietsenstallingNS om een tracking ID aan te vragen, als u niet van deze functie gebruik wilt maken voer een 0 in",
+                                     "Optionele Telegram notificatie", 1)
+    naam = Label(w, text="Telegram ID:", fg="white", bg="blue")
+    naam.config(height="1", width="10")
+    naam.place(x="73", y="90")
+    e = Entry(w,width=14)
+    #e.config(heigh="1", width="7")
+    e.place(x="150", y="91")
+
+
     if fietsnummer_registratie < 99:
         fietsnummer_registratie += 1
         print_text = 'Uw fietsnummer is: ' + str(fietsnummer_registratie)
@@ -51,7 +62,7 @@ def RegistreerMenu():
         print_text = "Het maximaal aantal fietsen is gestald."
     naam_2 = Label(w, text= print_text, fg="black", bg="yellow")
     naam_2.config(height="1", width="30")
-    naam_2.place(x="0", y="95")
+    naam_2.place(x="0", y="125")
 
     naam_registratie = e.get()
     print("Naam: ", str(naam_registratie))
