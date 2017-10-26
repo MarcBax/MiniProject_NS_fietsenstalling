@@ -2,7 +2,6 @@ from  tkinter import *
 from PIL import ImageTk, Image
 from captcha.image import ImageCaptcha
 import requests
-from telegram.ext import Updater,CommandHandler
 import csv
 import datetime
 import ctypes
