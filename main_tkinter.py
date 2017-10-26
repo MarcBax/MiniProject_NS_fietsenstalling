@@ -160,7 +160,7 @@ def OphaalMenu():
     captchatekst.config(height="1", width="60")
     captchatekst.place(x="73", y="450")
 
-    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(1)])
+    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(5)])
     captcha = ImageCaptcha()
     data = captcha.generate(chars)
     image = Image.open(data)
@@ -186,7 +186,7 @@ def OphaalMenu():
 
 def beveiliging():
     global chars
-    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(1)])
+    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(5)])
     captcha = ImageCaptcha()
     data = captcha.generate(chars)
     image = Image.open(data)
