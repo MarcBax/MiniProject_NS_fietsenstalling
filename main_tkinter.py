@@ -131,9 +131,14 @@ def Stallen():
 
 def schrijven_stallen():
     global e1, e2, e7
-    naam = e1.get()
-    fietsnummer = e2.get()
-    stallen(naam, fietsnummer, teleID)
+    with open('registratie.csv', 'r') as lezenstallencsv:
+        lezen = csv.reader(lezenstallencsv, delimiter=';')
+        for rij in lezen:
+            if e2.get() in rij and e1.get() in rij:
+                teleID = rij[2]
+                naam = rij[1]
+                fietsnummer = rij[0]
+                stallen(naam, fietsnummer, teleID)
 
 # auteur: Mark
 def OphaalMenu():
@@ -160,7 +165,7 @@ def OphaalMenu():
     captchatekst.config(height="1", width="60")
     captchatekst.place(x="73", y="450")
 
-    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(5)])
+    chars = ''.join([random.choice(string.ascii_letters.upper() + string.digits) for n in range(5)])
     captcha = ImageCaptcha()
     data = captcha.generate(chars)
     image = Image.open(data)
@@ -186,7 +191,7 @@ def OphaalMenu():
 
 def beveiliging():
     global chars
-    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(5)])
+    chars = ''.join([random.choice(string.ascii_letters.upper() + string.digits) for n in range(5)])
     captcha = ImageCaptcha()
     data = captcha.generate(chars)
     image = Image.open(data)
@@ -207,8 +212,7 @@ def ZekerWeten():
 
 def controle():
     ingevoerd = text.get("1.0", END)
-    print(chars)
-    print(ingevoerd)
+    ingevoerd = ingevoerd.upper()
     if ""+ingevoerd.strip() != ""+chars.strip():
         FoutCaptcha()
     else:
@@ -318,7 +322,6 @@ def aanroepen_informatie():
     window1.withdraw()
     schrijven_persoonlijke_informatie()
     pop_up_informatie()
-    pop_up_informatie_telegramIDshow()
 
 def schrijven_persoonlijke_informatie():
     global e3, e4
@@ -410,6 +413,7 @@ def OpenHoofdMenu4():
 #auteur: Marc Bax
 def registreren(naam_registratie,teleID_registratie ):              #functie voor het registreren van een fiets
     global fietsnummer_registratie
+
     with open('registratie.csv', 'a') as registrerencsv:
         schrijven = csv.writer(registrerencsv, delimiter = ';')
         print(naam_registratie)
@@ -431,11 +435,12 @@ def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
         for rij in lezen:
             if naam_ophalen in rij and fietsnummer_ophalen in rij:
                 TeleID =rij[2]
-                if int(TeleID) > 100:
+                if int(TeleID) > 9999:
                     nu = datetime.datetime.today()
                     datum_nu = nu.strftime("%a %x %X")
                     telerequest = "https://api.telegram.org/bot458958945:AAENUyVr_1PGmhmL_T4mV356-UzIihx4yrg/SendMessage?chat_id=" + str(
-                        TeleID) + "&text=Je fiets is opgehaald op " + datum_nu
+                        TeleID) + "&text=Je fiets is opgehaald op " + datum_nu + "\nUw bij NS geregisteerd fietsnummer is : " + fietsnummer_ophalen + \
+                                  "\nUw geregisteerde naam is : " + naam_ophalen +"\nU kunt deze gegevens volgende keer weer gebruiken, prettige dag."
                     r = requests.get(telerequest)
             else:
                 continue
@@ -453,10 +458,6 @@ def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
                 outfile.write(regel)
                 outfile.write('\n')
     outfile.close()
-    ## telegramNotificatie
-
-
-
 
 #auteur: Marc Bax
 def informatie_opvragen(naam_informatie, fietsnummer_informatie):
@@ -466,6 +467,7 @@ def informatie_opvragen(naam_informatie, fietsnummer_informatie):
         lezen = csv.reader(lezenstallencsv, delimiter=';')
         if naam_informatie or fietsnummer_informatie == "":
             datum = ""
+            telegramIDshow = ""
         teller = 0
         for rij in lezen:
             if naam_informatie in rij and fietsnummer_informatie in rij:
@@ -474,12 +476,13 @@ def informatie_opvragen(naam_informatie, fietsnummer_informatie):
                 Telegram_ID =rij[2]
             else:
                 teller += 0
+
         if teller == 1:
             datum = "Uw fiets is gestald op: " + datum_tijd
             telegramIDshow = "Uw Telegram ID is :" + Telegram_ID
         else:
             datum = "Uw fiets is niet meer gestald."
-            telegramIDshow = "Uw Telegram ID is :" + Telegram_ID
+            telegramIDshow = "Uw Telegram ID is : 0"
 
 fietsnummer_registratie = 0
 HoofdMenu()
