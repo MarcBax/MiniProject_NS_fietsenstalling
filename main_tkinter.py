@@ -1,10 +1,16 @@
 from  tkinter import *
+from PIL import ImageTk, Image
+from captcha.image import ImageCaptcha
+import requests
+from telegram.ext import Updater,CommandHandler
 import csv
 import datetime
 import ctypes
+import sys
+import random
+import string
 window = Tk()
 window.title("Welkom!")
-
 
 def HoofdMenu():
     label = Label(window, text="Welkom bij de NS-fietsenstalling!", font=("Myriad pro cond",20), bg="blue", fg="white")
@@ -29,10 +35,10 @@ def HoofdMenu():
 
     button_quit = Button(window, text='sluiten', font=("Myriad pro cond",20), command=window.quit, bg='red', fg='white')
     button_quit.config(height=1, width=5)
-    button_quit.place(x="1435", y="730")
+    button_quit.place(x="1435", y="630")
 
 def RegistreerMenu():
-    global w, e, fietsnummer_registratie
+    global w, e, e7, fietsnummer_registratie, tele_registratie
     w = Tk()
     w.title("Registreren!")
     label = Label(w, text="Fiets Registreren", font=("Myriad pro cond",20), fg="white", bg="blue")
@@ -46,7 +52,7 @@ def RegistreerMenu():
     e.place(x="600", y="255")
 
     ctypes.windll.user32.MessageBoxW(0,
-                                     "Maak een account aan op telegram en stuur een bericht naar fietsenstallingNS om een tracking ID aan te vragen, als u niet van deze functie gebruik wilt maken voer een 0 in",
+                                     "Maak een account aan op telegram en stuur een bericht naar fietsenstallingNS om een tracking ID aan te vragen, als u niet van deze functie gebruik wilt maken voer niets in",
                                      "Optionele Telegram notificatie", 1)
     naam = Label(w, text="Telegram ID:", font=("Myriad pro cond",20), fg="white", bg="blue")
     naam.config(height="1", width="30")
@@ -65,14 +71,15 @@ def RegistreerMenu():
     naam_2.place(x="5", y="350")
 
     naam_registratie = e.get()
-    print("Naam: ", str(naam_registratie))
+    tele_registratie = e7.get()
+
     buttongadoor = Button(w, text="Registreer Gegevens", font=("Myriad pro cond",20), fg="white", bg="blue", command=Registratie)
     buttongadoor.config(height="1", width="30")
-    buttongadoor.place(x="1050", y="730")
+    buttongadoor.place(x="1050", y="630")
 
     buttongaterug = Button(w, text="Ga terug",command=OpenHoofdMenu, font=("Myriad pro cond",20),  fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.place(x="0", y="730")
+    buttongaterug.place(x="0", y="630")
 
     w.configure(background="yellow")
     w.geometry("{0}x{1}+0+0".format(w.winfo_screenwidth(), w.winfo_screenheight()))
@@ -82,9 +89,11 @@ def Registratie():
     OpenHoofdMenu()
 
 def schrijven_registreren():
-    global e
+    global e, e7, teleID
     naam = e.get()
-    registreren(naam)
+    teleID = e7.get()
+    registreren(naam, teleID)
+
 
 def StalMenu():
     global win, e1, e2
@@ -108,11 +117,11 @@ def StalMenu():
 
     buttongadoor = Button(win, text="Stal Fiets", font=("Myriad pro cond",20), fg="white", bg="blue", command=Stallen)
     buttongadoor.config(height="1", width="30")
-    buttongadoor.place(x="1050", y="730")
+    buttongadoor.place(x="1050", y="630")
 
     buttongaterug = Button(win, text="Ga terug", font=("Myriad pro cond",20), command=OpenHoofdMenu1, fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.place(x="0", y="730")
+    buttongaterug.place(x="0", y="630")
 
     win.configure(background="yellow")
     win.geometry("{0}x{1}+0+0".format(win.winfo_screenwidth(), win.winfo_screenheight()))
@@ -122,15 +131,15 @@ def Stallen():
     OpenHoofdMenu1()
 
 def schrijven_stallen():
-    global e1, e2
+    global e1, e2, e7
     naam = e1.get()
     fietsnummer = e2.get()
-    stallen(naam, fietsnummer)
+    stallen(naam, fietsnummer, teleID)
 
 # auteur: Mark
 def OphaalMenu():
-    global wind, e5, e6
-    wind = Tk()
+    global wind, e5, e6, chars, text
+    wind = Toplevel()
     wind.title("Ophalen!")
     label = Label(wind, text="Fiets ophalen", font=("Myriad pro cond",20), fg="white", bg="blue")
     label.config(height="2", width="250")
@@ -148,16 +157,83 @@ def OphaalMenu():
     e6 = Entry(wind, width=50)
     e6.place(x="600", y="300")
 
-    buttongadoor = Button(wind, text="haal op", font=("Myriad pro cond",20), fg="white", bg="blue", command=Ophalen)
+    captchatekst = Label(wind, text="Vul hieronder de combinatie van cijfers en letters in uit de afbeelding:",font=("Myriad pro cond", 20), fg="white", bg="blue")
+    captchatekst.config(height="1", width="60")
+    captchatekst.place(x="73", y="450")
+
+    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(1)])
+    captcha = ImageCaptcha()
+    data = captcha.generate(chars)
+    image = Image.open(data)
+    img = image.resize((480, 120), Image.ANTIALIAS)
+    photo = ImageTk.PhotoImage(img)
+    captchaLabel = Label(wind, image=photo)
+    captchaLabel.image = photo
+    captchaLabel.place(x=73, y=500)
+
+    text = Text(wind, height=1, width=7, font=("Myriad pro cond", 80))
+    text.place(x="600", y="500")
+
+    buttongadoor = Button(wind, text="haal op", font=("Myriad pro cond",20), fg="white", bg="blue", command=controle)
     buttongadoor.config(height="1", width="30")
-    buttongadoor.place(x="1050", y="730")
+    buttongadoor.place(x="1050", y="630")
 
     buttongaterug = Button(wind, text="Ga terug", font=("Myriad pro cond",20), command=OpenHoofdMenu2, fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.place(x="0", y="730")
+    buttongaterug.place(x="0", y="630")
 
     wind.configure(background="yellow")
     wind.geometry("{0}x{1}+0+0".format(wind.winfo_screenwidth(), wind.winfo_screenheight()))
+
+def beveiliging():
+    global chars
+    chars = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(1)])
+    captcha = ImageCaptcha()
+    data = captcha.generate(chars)
+    image = Image.open(data)
+    img = image.resize((480, 120), Image.ANTIALIAS)
+    photo = ImageTk.PhotoImage(img)
+    captchaLabel = Label(wind, image=photo)
+    captchaLabel.image = photo
+    captchaLabel.place(x=73, y=500)
+
+
+def ZekerWeten():
+    label = Button(wind, text="Mijn gegevens zijn juist", font=("Myriad pro cond", 20), fg="white", bg="blue", command=controle)
+    label.config(height="1", width="30")
+    label.place(x=1050, y=630)
+    wind.configure(background="yellow")
+    wind.geometry("{0}x{1}+0+0".format(wind.winfo_screenwidth(), wind.winfo_screenheight()))
+
+
+def controle():
+    ingevoerd = text.get("1.0", END)
+    print(chars)
+    print(ingevoerd)
+    if ""+ingevoerd.strip() != ""+chars.strip():
+        FoutCaptcha()
+    else:
+        Ophalen()
+
+def FoutCaptcha():
+    global window5
+    wind.withdraw()
+    window5 = Toplevel()
+    window5.title("Foute Captcha!")
+    label10 = Label(window5, text="De Captcha was onjuist!", bg="blue", fg="white")
+    label10.config(height=5, width=70)
+    label10.pack(pady=250)
+    window5.configure(background="yellow")
+    window5.geometry("{0}x{1}+0+0".format(window.winfo_screenwidth(), window.winfo_screenheight()))
+    gaterug = Button(window5, text="Terug", font=("Myriad pro cond",20), bg="red", fg="white", command=OpenHoofdMenu5)
+    gaterug.config(height="1", width="30")
+    gaterug.place(x="0", y="630")
+
+def OpenHoofdMenu5():
+    window.deiconify()
+    window5.withdraw()
+    for gegevens in window5.winfo_children():
+        gegevens.destroy()
 
 def Ophalen():
     schrijven_ophalen()
@@ -184,7 +260,7 @@ def InfoMenu():
     with open('stallen.csv') as lezenstallencsv:
         regels = lezenstallencsv.readlines()
         if len(regels) > 1:
-            plekken_over = "Er zijn " + str(int(99 - len(regels) / 2)) + " plekken over."
+            plekken_over = "Er zijn " + str(int(100 - len(regels) / 2)) + " plekken over."
         elif len(regels) == 1:
             plekken_over = "Er zijn 99 plekken over."
 
@@ -194,11 +270,11 @@ def InfoMenu():
 
     buttongadoor = Button(windo, text="persoonlijke informatie", font=("Myriad pro cond",20), fg="white", bg="blue", command=Open_persoonlijke_informatie)
     buttongadoor.config(height="1", width="30")
-    buttongadoor.place(x="1050", y="730")
+    buttongadoor.place(x="1050", y="630")
 
     buttongaterug = Button(windo, text="Ga terug",command=OpenHoofdMenu3, font=("Myriad pro cond",20), fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.place(x="0", y="730")
+    buttongaterug.place(x="0", y="630")
 
     windo.configure(background="yellow")
     windo.geometry("{0}x{1}+0+0".format(windo.winfo_screenwidth(), windo.winfo_screenheight()))
@@ -229,11 +305,11 @@ def Persoonlijke_informatie():
 
     buttongadoor = Button(window1, text="opvragen", font=("Myriad pro cond",20), fg="white", bg="blue",command=aanroepen_informatie)
     buttongadoor.config(height="1", width="30")
-    buttongadoor.place(x="1050", y="730")
+    buttongadoor.place(x="1050", y="630")
 
     buttongaterug = Button(window1, text="Ga terug", command=OpenHoofdMenu4, font=("Myriad pro cond",20), fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.place(x="0", y="730")
+    buttongaterug.place(x="0", y="630")
 
     window1.configure(background="yellow")
     window1.configure(background="yellow")
@@ -242,7 +318,8 @@ def Persoonlijke_informatie():
 def aanroepen_informatie():
     window1.withdraw()
     schrijven_persoonlijke_informatie()
-    pop_up_informatie_datum()
+    pop_up_informatie()
+    pop_up_informatie_telegramIDshow()
 
 def schrijven_persoonlijke_informatie():
     global e3, e4
@@ -250,8 +327,8 @@ def schrijven_persoonlijke_informatie():
     fietsnummer = e4.get()
     informatie_opvragen(naam, fietsnummer)
 
-def pop_up_informatie_datum():
-    global datum, window2
+def pop_up_informatie():
+    global datum, window2, telegramIDshow
     window2 = Tk()
     window2.title("Informatie!")
     label = Label(windo, text="Datum",font=("Myriad pro cond",20), fg="white", bg="blue")
@@ -259,12 +336,16 @@ def pop_up_informatie_datum():
     label.place(x=300, y=50)
 
     naam_3 = Label(window2, text=datum, font=("Myriad pro cond",20), fg="black", bg="yellow")
-    naam_3.config(height="3", width="30")
+    naam_3.config(height="3", width="50")
     naam_3.place(x=300, y=100)
+
+    telegram_3 = Label(window2, text=telegramIDshow, font=("Myriad pro cond",20), fg="black", bg="yellow")
+    telegram_3.config(height="3", width="50")
+    telegram_3.place(x=300, y=200)
 
     buttongaterug = Button(window2, text="sluiten", font=("Myriad pro cond",20), command=SluitScherm5, fg="white", bg="red")
     buttongaterug.config(height="1", width="30")
-    buttongaterug.place(x="0", y="730")
+    buttongaterug.place(x="0", y="630")
 
     window2.configure(background="yellow")
     window2.geometry("{0}x{1}+0+0".format(window2.winfo_screenwidth(), window2.winfo_screenheight()))
@@ -328,30 +409,44 @@ def OpenHoofdMenu4():
         gegevens.destroy()
 
 #auteur: Marc Bax
-def registreren(naam_registratie):              #functie voor het registreren van een fiets
+def registreren(naam_registratie,teleID_registratie ):              #functie voor het registreren van een fiets
     global fietsnummer_registratie
     with open('registratie.csv', 'a') as registrerencsv:
         schrijven = csv.writer(registrerencsv, delimiter = ';')
         print(naam_registratie)
-        schrijven.writerow((fietsnummer_registratie, naam_registratie))     #rij schrijven van de inputs
+        schrijven.writerow((fietsnummer_registratie, naam_registratie, teleID_registratie))     #rij schrijven van de inputs
 
 #auteur: Marc Bax
-def stallen(naam_stallen, fietsnummer_stallen):                           #functie voor het stallen van een fiets
+def stallen(naam_stallen, fietsnummer_stallen, teleID_stallen):                           #functie voor het stallen van een fiets
     global datum_tijd
     with open('stallen.csv', 'a') as stallencsv:
         vandaag = datetime.datetime.today()
         datum_tijd = vandaag.strftime("%a %x %X")                           #de huidige datum en tijd
         schrijven = csv.writer(stallencsv, delimiter = ';')
-        schrijven.writerow((fietsnummer_stallen, naam_stallen, datum_tijd))       #in stallen.csv de variable schrijven
+        schrijven.writerow((fietsnummer_stallen, naam_stallen, teleID_stallen, datum_tijd))       #in stallen.csv de variable schrijven
 
 #auteur: Marc Bax
 def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
+    with open('stallen.csv', 'r') as lezenstallencsv:
+        lezen = csv.reader(lezenstallencsv, delimiter=';')
+        for rij in lezen:
+            if naam_ophalen in rij and fietsnummer_ophalen in rij:
+                TeleID =rij[2]
+                if int(TeleID) > 100:
+                    nu = datetime.datetime.today()
+                    datum_nu = nu.strftime("%a %x %X")
+                    telerequest = "https://api.telegram.org/bot458958945:AAENUyVr_1PGmhmL_T4mV356-UzIihx4yrg/SendMessage?chat_id=" + str(
+                        TeleID) + "&text=Je fiets is opgehaald op " + datum_nu
+                    r = requests.get(telerequest)
+            else:
+                continue
+
     infile = open('stallen.csv', 'r')
     lijst_gestalde_fietsen = infile.readlines()
-    lijst_gestalde_fietsen.remove('fietsnummer;naam;datum\n')
+    lijst_gestalde_fietsen.remove('fietsnummer;naam;telegramID;datum\n')
     infile.close()
     outfile = open('stallen.csv', 'w')
-    outfile.write('fietsnummer;naam;datum\n')
+    outfile.write('fietsnummer;naam;telegramID;datum\n')
     for regel in lijst_gestalde_fietsen:
         partsRegel = regel.rstrip().split(";")
         if len(partsRegel) >= 2:
@@ -359,10 +454,15 @@ def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
                 outfile.write(regel)
                 outfile.write('\n')
     outfile.close()
+    ## telegramNotificatie
+
+
+
 
 #auteur: Marc Bax
 def informatie_opvragen(naam_informatie, fietsnummer_informatie):
     global datum
+    global telegramIDshow
     with open('stallen.csv', 'r') as lezenstallencsv:
         lezen = csv.reader(lezenstallencsv, delimiter=';')
         if naam_informatie or fietsnummer_informatie == "":
@@ -371,16 +471,29 @@ def informatie_opvragen(naam_informatie, fietsnummer_informatie):
         for rij in lezen:
             if naam_informatie in rij and fietsnummer_informatie in rij:
                 teller += 1
-                datum_tijd = rij[2]
+                datum_tijd = rij[3]
+                Telegram_ID =rij[2]
             else:
                 teller += 0
         if teller == 1:
             datum = "Uw fiets is gestald op: " + datum_tijd
+            telegramIDshow = "Uw Telegram ID is :" + Telegram_ID
         else:
             datum = "Uw fiets is niet meer gestald."
+            telegramIDshow = "Uw Telegram ID is :" + Telegram_ID
 
 fietsnummer_registratie = 0
 HoofdMenu()
 window.configure(background="yellow")
 window.geometry("{0}x{1}+0+0".format(window.winfo_screenwidth(), window.winfo_screenheight()))
 window.mainloop()
+
+infile = open('stallen.csv', 'r')
+lijst_gestalde_fietsen = infile.readlines()
+lijst_gestalde_fietsen.remove('fietsnummer;naam;telegramID;datum\n')
+infile.close()
+outfile = open('stallen.csv', 'w')
+outfile.write('fietsnummer;naam;telegramID;datum\n')
+for regel in lijst_gestalde_fietsen:
+    partsRegel = regel.rstrip().split(";")
+    print(partsRegel)
