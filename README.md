@@ -14,8 +14,8 @@
 
 #### telegram_bot.py werkend maken
 * Installeer de pip [python-telegram-bot](https://pypi.python.org/pypi/python-telegram-bot)
-* Run deze code zodat de telegram bot reacties geeft zoals de tracking id en commands
-    * /id, /info en /eng_info
+* Run deze code zodat de telegram bot reacties geeft zoals de tracking id en commands en het welkomsbericht.
+    * commands : /id, /info en /eng_info
     * de push notificatie werkt zonder telegram_bot.py
 
 
