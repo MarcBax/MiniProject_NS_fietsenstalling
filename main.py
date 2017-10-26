@@ -40,7 +40,7 @@ def HoofdMenu():
 # auteur: Mark Gasse
 # Laat het scherm zien van registreren en maakt verbinding met andere functies
 def RegistreerMenu():
-    global Scherm_Registratie, naam_persoon, telegram, fietsnummer_registratie, tele_registratie
+    global Scherm_Registratie, naam_registreer, telegram, fietsnummer_registratie, tele_registratie
     Scherm_Registratie = Tk()
     Scherm_Registratie.title("Registreren!")
     label_registratie = Label(Scherm_Registratie, text="Fiets Registreren", font=("Myriad pro cond",20), fg="white", bg="blue")
@@ -97,8 +97,8 @@ def Registratie():
     OpenHoofdMenu()
 
 def schrijven_registreren():
-    global naam_persoon, telegram, teleID
-    naam = naam_persoon.get()
+    global naam_registreer, telegram, teleID
+    naam = naam_registreer.get()
     teleID = telegram.get()
     registreren(naam, teleID)
 
