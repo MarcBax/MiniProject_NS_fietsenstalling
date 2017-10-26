@@ -86,6 +86,7 @@ def RegistreerMenu():
     Scherm_Registratie.configure(background="yellow")
     Scherm_Registratie.geometry("{0}x{1}+0+0".format(Scherm_Registratie.winfo_screenwidth(), Scherm_Registratie.winfo_screenheight()))
 
+# Hij zegt dat 2 andere functies moeten worden uitgevoerd
 def Registratie():
     schrijven_registreren()
     OpenHoofdMenu()
@@ -128,6 +129,7 @@ def StalMenu():
     Scherm_stal.configure(background="yellow")
     Scherm_stal.geometry("{0}x{1}+0+0".format(Scherm_stal.winfo_screenwidth(), Scherm_stal.winfo_screenheight()))
 
+# Hij zegt dat 2 andere functies moeten worden uitgevoerd
 def Stallen():
     schrijven_stallen()
     OpenHoofdMenu1()
@@ -235,12 +237,15 @@ def FoutCaptcha():
     GaTerug.config(height="1", width="30")
     GaTerug.place(x="0", y="630")
 
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
+# Ook zorgt hij dat de functie er niet dubbel instaat.
 def OpenHoofdMenu5():
     Scherm_HoofdMenu.deiconify()
     Scherm_Captcha.withdraw()
     for gegevens in Scherm_Captcha.winfo_children():
         gegevens.destroy()
 
+# Hij zegt dat 2 andere functies moeten worden uitgevoerd
 def Ophalen():
     schrijven_ophalen()
     OpenHoofdMenu2()
@@ -285,6 +290,7 @@ def InfoMenu():
     Scherm_info.configure(background="yellow")
     Scherm_info.geometry("{0}x{1}+0+0".format(Scherm_info.winfo_screenwidth(), Scherm_info.winfo_screenheight()))
 
+# Hij zegt dat 1 scherm moet worden gesloten en voert dat 1 functies moet worden uitgevoert.
 def Open_persoonlijke_informatie():
     Scherm_info.withdraw()
     Persoonlijke_informatie()
@@ -321,6 +327,7 @@ def Persoonlijke_informatie():
     Scherm_persoonlijk.configure(background="yellow")
     Scherm_persoonlijk.geometry("{0}x{1}+0+0".format(Scherm_info.winfo_screenwidth(), Scherm_info.winfo_screenheight()))
 
+# Hij sluit 1 scherm en zegt dat 2 functies moet worden uitgevoerd
 def aanroepen_informatie():
     Scherm_persoonlijk.withdraw()
     schrijven_persoonlijke_informatie()
@@ -356,30 +363,36 @@ def pop_up_informatie():
     Scherm_info_pop.geometry("{0}x{1}+0+0".format(Scherm_info_pop.winfo_screenwidth(), Scherm_info_pop.winfo_screenheight()))
 
 #auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en voert dat 1 functies moet worden uitgevoert.
 def SluitScherm1():
     Scherm_HoofdMenu.withdraw()
     RegistreerMenu()
 
 #auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en voert dat 1 functies moet worden uitgevoert.
 def SluitScherm2():
     Scherm_HoofdMenu.withdraw()
     StalMenu()
 
 # auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en voert dat 1 functies moet worden uitgevoert.
 def SluitScherm3():
     Scherm_HoofdMenu.withdraw()
     OphaalMenu()
 
 # auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en voert dat 1 functies moet worden uitgevoert.
 def SluitScherm4():
     Scherm_HoofdMenu.withdraw()
     InfoMenu()
 
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
 def SluitScherm5():
     Scherm_HoofdMenu.deiconify()
     Scherm_info_pop.withdraw()
 
-
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
+# Ook zorgt hij dat de functie er niet dubbel instaat.
 def OpenHoofdMenu():
     Scherm_HoofdMenu.deiconify()
     Scherm_Registratie.withdraw()
@@ -387,6 +400,8 @@ def OpenHoofdMenu():
         gegevens.destroy()
 
 # auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
+# Ook zorgt hij dat de functie er niet dubbel instaat.
 def OpenHoofdMenu1():
     Scherm_HoofdMenu.deiconify()
     Scherm_stal.withdraw()
@@ -394,6 +409,8 @@ def OpenHoofdMenu1():
         gegevens.destroy()
 
 # auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
+# Ook zorgt hij dat de functie er niet dubbel instaat.
 def OpenHoofdMenu2():
     Scherm_HoofdMenu.deiconify()
     Scherm_Haal_Op.withdraw()
@@ -401,12 +418,16 @@ def OpenHoofdMenu2():
         gegevens.destroy()
 
 # auteur: Mark
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
+# Ook zorgt hij dat de functie er niet dubbel instaat.
 def OpenHoofdMenu3():
     Scherm_HoofdMenu.deiconify()
     Scherm_info.withdraw()
     for gegevens in Scherm_info.winfo_children():
         gegevens.destroy()
 
+# Hij zegt dat 1 scherm moet worden gesloten en een andere scherm moet openen.
+# Ook zorgt hij dat de functie er niet dubbel instaat.
 def OpenHoofdMenu4():
     Scherm_HoofdMenu.deiconify()
     Scherm_persoonlijk.withdraw()
