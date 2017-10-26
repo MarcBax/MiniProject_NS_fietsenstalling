@@ -11,7 +11,7 @@ Scherm_HoofdMenu = Tk()
 Scherm_HoofdMenu.title("Welkom!")
 
 # auteur: Mark Gasse
-# Laat het scherm hoofd menu zien als je het programma opstart en zorgt dat je verbinding maakt met andere schermen
+# Laat het scherm hoofd menu zien als je het programma opstart en zorgt dat je andere functies aanroept
 def HoofdMenu():
     label_hoofd_menu = Label(Scherm_HoofdMenu, text="Welkom bij de NS-fietsenstalling!", font=("Myriad pro cond",20), bg="blue", fg="white")
     label_hoofd_menu.config(height=2, width=250)
@@ -92,17 +92,22 @@ def RegistreerMenu():
     Scherm_Registratie.configure(background="yellow")
     Scherm_Registratie.geometry("{0}x{1}+0+0".format(Scherm_Registratie.winfo_screenwidth(), Scherm_Registratie.winfo_screenheight()))
 
+#Auteur: Mark en Marc
+#roept twee functies aan ten behoeve voor registratie, scherm en schrijven.
 def Registratie():
     schrijven_registreren()
     OpenHoofdMenu()
 
+#Auteur: Marc en Mark
+#Naam en teleID krijgen samen een waarde, functie registreren wordt aangeroepen
 def schrijven_registreren():
     global naam_registreer, telegram, teleID
     naam = naam_registreer.get()
     teleID = telegram.get()
     registreren(naam, teleID)
 
-
+#Auteur: Mark
+#Laat het scherm stal menu zien als je het programma opstart en zorgt dat je andere functies aanroept
 def StalMenu():
     global Scherm_stal, stal_naam, Stal_fiets_nummer
     Scherm_stal = Tk()
@@ -134,10 +139,14 @@ def StalMenu():
     Scherm_stal.configure(background="yellow")
     Scherm_stal.geometry("{0}x{1}+0+0".format(Scherm_stal.winfo_screenwidth(), Scherm_stal.winfo_screenheight()))
 
+#Auteur: Mark en Marc
+#worden twee functies aangeroepen
 def Stallen():
     schrijven_stallen()
     OpenHoofdMenu1()
 
+#Auteur: Marc en Mark en Gideon
+#Leest registratie.csv, vervolgens noteert functie ingevoerde waarde.
 def schrijven_stallen():
     global stal_naam, Stal_fiets_nummer, telegram
     with open('registratie.csv', 'r') as lezenstallencsv:
@@ -149,7 +158,9 @@ def schrijven_stallen():
                 fietsnummer = rij[0]
                 stallen(naam, fietsnummer, teleID)
 
-# auteur: Mark
+# Auteur: Mark en Geert en Gideon
+#  Laat het scherm ophaalmenu zien als je het programma opstart en zorgt dat je andere functies aanroept
+# Waaronder het aanroepen van "Captcha"
 def OphaalMenu():
     global Scherm_Haal_Op, naam_ophalen, fiets_nummer, chars, text
     Scherm_Haal_Op = Toplevel()
@@ -198,6 +209,9 @@ def OphaalMenu():
     Scherm_Haal_Op.configure(background="yellow")
     Scherm_Haal_Op.geometry("{0}x{1}+0+0".format(Scherm_Haal_Op.winfo_screenwidth(), Scherm_Haal_Op.winfo_screenheight()))
 
+
+# Auteur: Geert en Gideon
+# genereert Captcha en brengt dit naar het scherm
 def beveiliging():
     global chars
     chars = ''.join([random.choice(string.ascii_letters.upper() + string.digits) for n in range(5)])
@@ -210,15 +224,8 @@ def beveiliging():
     captchaLabel.image = photo
     captchaLabel.place(x=73, y=500)
 
-
-def ZekerWeten():
-    label_gegevens = Button(Scherm_Haal_Op, text="Mijn gegevens zijn juist", font=("Myriad pro cond", 20), fg="white", bg="blue", command=controle)
-    label_gegevens.config(height="1", width="30")
-    label_gegevens.place(x=1050, y=630)
-    Scherm_Haal_Op.configure(background="yellow")
-    Scherm_Haal_Op.geometry("{0}x{1}+0+0".format(Scherm_Haal_Op.winfo_screenwidth(), Scherm_Haal_Op.winfo_screenheight()))
-
-
+# Auteur: Geert en Gideon
+#controleert of de ingevoerde Captcha gelijk is aan het plaatje.
 def controle():
     ingevoerd = text.get("1.0", END)
     ingevoerd = ingevoerd.upper()
@@ -226,7 +233,8 @@ def controle():
         FoutCaptcha()
     else:
         Ophalen()
-
+#Auteur: Geert en Gideon
+#Functie die scherm aanmaakt met melding dat de Captcha fout is wanneer deze fout is ingevoerd.
 def FoutCaptcha():
     global Scherm_Captcha
     Scherm_Haal_Op.withdraw()
@@ -241,16 +249,23 @@ def FoutCaptcha():
     GaTerug.config(height="1", width="30")
     GaTerug.place(x="0", y="630")
 
+#Auteur: Geert
+# Laat het scherm hoofd menu 5 zien en sluit fout captcha scherm
 def OpenHoofdMenu5():
     Scherm_HoofdMenu.deiconify()
     Scherm_Captcha.withdraw()
+#zorgt ervoor dat de gegevens op het scherm niet dubbel komen te staan.
     for gegevens in Scherm_Captcha.winfo_children():
         gegevens.destroy()
 
+#Auteur: Mark en Marc
+#aanroepen van twee functies
 def Ophalen():
     schrijven_ophalen()
     OpenHoofdMenu2()
 
+#Auteur: Marc en Mark
+# Naem en fietsnummer krijgen samen een waarde, functie fiets_ophalen wordt aangeroepen.
 def schrijven_ophalen():
     global naam_ophalen, fiets_nummer
     naam = naam_ophalen.get()
@@ -258,6 +273,8 @@ def schrijven_ophalen():
     fiets_ophalen(naam, fietsnummer)
 
 # auteur: Mark
+#  Laat het scherm info menu zien en opent het bestand stallen.csv om in te lezen hoeveel plekken er nog vrij zijn.
+# Roept bepaalde functies aan wanneer je op een knop drukt.
 def InfoMenu():
     global Scherm_info
     Scherm_info = Tk()
@@ -291,10 +308,14 @@ def InfoMenu():
     Scherm_info.configure(background="yellow")
     Scherm_info.geometry("{0}x{1}+0+0".format(Scherm_info.winfo_screenwidth(), Scherm_info.winfo_screenheight()))
 
+# Auteur: Mark en Marc
+# funtie die scherm sluit en andere functie aanroept
 def Open_persoonlijke_informatie():
     Scherm_info.withdraw()
     Persoonlijke_informatie()
 
+# Auteur: Marc en Mark
+# Nieuw scherm wordt aangemaakt, waar persoonlijke informatie achterhaald kan worden.
 def Persoonlijke_informatie():
     global Scherm_persoonlijk, persoonlijke_naam, persoonlijk_fietsNummer
     Scherm_persoonlijk = Tk()
@@ -327,17 +348,23 @@ def Persoonlijke_informatie():
     Scherm_persoonlijk.configure(background="yellow")
     Scherm_persoonlijk.geometry("{0}x{1}+0+0".format(Scherm_info.winfo_screenwidth(), Scherm_info.winfo_screenheight()))
 
+#Auteur: Mark en Marc
+#sluit scherm en roept twee andere functies aan.
 def aanroepen_informatie():
     Scherm_persoonlijk.withdraw()
     schrijven_persoonlijke_informatie()
     pop_up_informatie()
 
+#Auteur: Marc en Mark
+#naam en fietsnummer krijgen allebei een waarde en er wordt een functie aangeroepen.
 def schrijven_persoonlijke_informatie():
     global persoonlijke_naam, persoonlijk_fietsNummer
     naam = persoonlijke_naam.get()
     fietsnummer = persoonlijk_fietsNummer.get()
     informatie_opvragen(naam, fietsnummer)
 
+#Auteur: Mark en Marc en Gideon
+# maakt nieuw scherm aan met persoonlijke informatie zichtbaar.
 def pop_up_informatie():
     global datum, Scherm_info_pop, telegramIDshow
     Scherm_info_pop = Tk()
@@ -362,81 +389,111 @@ def pop_up_informatie():
     Scherm_info_pop.geometry("{0}x{1}+0+0".format(Scherm_info_pop.winfo_screenwidth(), Scherm_info_pop.winfo_screenheight()))
 
 #auteur: Mark
+#sluit scherm en roept functie aan
 def SluitScherm1():
     Scherm_HoofdMenu.withdraw()
     RegistreerMenu()
 
 #auteur: Mark
+#sluit scherm en roept functie aan
 def SluitScherm2():
     Scherm_HoofdMenu.withdraw()
     StalMenu()
 
 # auteur: Mark
+#sluit scherm en roept functie aan
 def SluitScherm3():
     Scherm_HoofdMenu.withdraw()
     OphaalMenu()
 
 # auteur: Mark
+#sluit scherm en roept functie aan
 def SluitScherm4():
     Scherm_HoofdMenu.withdraw()
     InfoMenu()
 
+#Auteur: Mark en Marc
+#opent een scherm en sluit een scherm
 def SluitScherm5():
     Scherm_HoofdMenu.deiconify()
     Scherm_info_pop.withdraw()
 
-
+#Auteur: Marc en Mark
+#opent scherm en sluit scherm
 def OpenHoofdMenu():
     Scherm_HoofdMenu.deiconify()
     Scherm_Registratie.withdraw()
+
+    #zorgt ervoor dat gegevens er niet dubbel komen te staan.
     for gegevens in Scherm_Registratie.winfo_children():
         gegevens.destroy()
 
 # auteur: Mark
+#opent een scherm en sluit een scherm
 def OpenHoofdMenu1():
     Scherm_HoofdMenu.deiconify()
     Scherm_stal.withdraw()
+
+    # zorgt ervoor dat gegevens er niet dubbel komen te staan.
     for gegevens in Scherm_stal.winfo_children():
         gegevens.destroy()
 
 # auteur: Mark
+# opent een scherm en sluit een scherm
 def OpenHoofdMenu2():
     Scherm_HoofdMenu.deiconify()
     Scherm_Haal_Op.withdraw()
+
+    # zorgt ervoor dat gegevens er niet dubbel komen te staan.
     for gegevens in Scherm_Haal_Op.winfo_children():
         gegevens.destroy()
 
 # auteur: Mark
+#opent een scherm en sluit een scherm
 def OpenHoofdMenu3():
     Scherm_HoofdMenu.deiconify()
     Scherm_info.withdraw()
+
+    # zorgt ervoor dat gegevens er niet dubbel komen te staan.
     for gegevens in Scherm_info.winfo_children():
         gegevens.destroy()
 
+#Auteur: Mark en Marc
+#opent een scherm en sluit een scherm
 def OpenHoofdMenu4():
     Scherm_HoofdMenu.deiconify()
     Scherm_persoonlijk.withdraw()
+
+    # zorgt ervoor dat gegevens er niet dubbel komen te staan.
     for gegevens in Scherm_persoonlijk.winfo_children():
         gegevens.destroy()
 
 #auteur: Marc Bax
-def registreren(naam_registratie,teleID_registratie ):              #functie voor het registreren van een fiets
+#functie voor het registreren van een fiets
+def registreren(naam_registratie,teleID_registratie ):
     global fietsnummer_registratie
 
+    # rij schrijven van de inputs
     with open('registratie.csv', 'a') as registrerencsv:
         schrijven = csv.writer(registrerencsv, delimiter = ';')
-        schrijven.writerow((fietsnummer_registratie, naam_registratie, teleID_registratie))     #rij schrijven van de inputs
+        schrijven.writerow((fietsnummer_registratie, naam_registratie, teleID_registratie))
 
 #auteur: Marc Bax
-def stallen(naam_stallen, fietsnummer_stallen, teleID_stallen):                           #functie voor het stallen van een fiets
+    # functie voor het stallen van een fiets
+def stallen(naam_stallen, fietsnummer_stallen, teleID_stallen):
     global datum_tijd
+
+    # de huidige datum en tijd
+    # in stallen.csv de variable schrijven
     with open('stallen.csv', 'a') as stallencsv:
         vandaag = datetime.datetime.today()
-        datum_tijd = vandaag.strftime("%a %x %X")                           #de huidige datum en tijd
+        datum_tijd = vandaag.strftime("%a %x %X")
         schrijven = csv.writer(stallencsv, delimiter = ';')
-        schrijven.writerow((fietsnummer_stallen, naam_stallen, teleID_stallen, datum_tijd))       #in stallen.csv de variable schrijven
+        schrijven.writerow((fietsnummer_stallen, naam_stallen, teleID_stallen, datum_tijd))
 
-#auteur: Marc Bax
+#auteur: Gianluca en Gideon en Marc
+#Deze functie controlleert de namen uit het stallen.csv bestand en kijkt of de naam overeen komt.
+#Zo ja, dan krijg je toegang en zo nodig een bevestiging via telegram. Vervolgens wordt de naam uit stallen.csv verwijdert.
 def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
     with open('stallen.csv', 'r') as lezenstallencsv:
         lezen = csv.reader(lezenstallencsv, delimiter=';')
@@ -469,7 +526,9 @@ def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
                 outfile.write('\n')
     outfile.close()
 
-#auteur: Marc Bax
+#auteur: Marc Bax en Gideon
+# leest stallen.csv en controlleert of ingevoerde gegevens overeenkomen met geschreven regels in stallen.csv
+# als het klopt dan komt er persoonlijke informatie te zien.
 def informatie_opvragen(naam_informatie, fietsnummer_informatie):
     global datum
     global telegramIDshow
@@ -492,10 +551,12 @@ def informatie_opvragen(naam_informatie, fietsnummer_informatie):
             telegramIDshow = "Uw Telegram ID is :" + Telegram_ID
         else:
             datum = "Uw fiets is niet meer gestald."
-            telegramIDshow = "Uw Telegram ID is : 0"
+            telegramIDshow = "Uw Telegram ID is alleen beschikbaar als uw fiets is gestalt"
 
 fietsnummer_registratie = 0
 HoofdMenu()
 Scherm_HoofdMenu.configure(background="yellow")
 Scherm_HoofdMenu.geometry("{0}x{1}+0+0".format(Scherm_HoofdMenu.winfo_screenwidth(), Scherm_HoofdMenu.winfo_screenheight()))
 Scherm_HoofdMenu.mainloop()
+
+#Commentaar: Mark en Gianluca
