@@ -435,6 +435,8 @@ def fiets_ophalen(naam_ophalen, fietsnummer_ophalen):
         for rij in lezen:
             if naam_ophalen in rij and fietsnummer_ophalen in rij:
                 TeleID =rij[2]
+                if TeleID == ""
+                    TeleID = 0
                 if int(TeleID) > 9999:
                     nu = datetime.datetime.today()
                     datum_nu = nu.strftime("%a %x %X")
